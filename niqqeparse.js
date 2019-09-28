@@ -1,11 +1,19 @@
 NiqqeParse = {
-  Parse(file, callback){
-    fetch(file)
-    .then(response => response.text())
-    .then(csv => getHeaders(csv))
+  file:'',
+  delimiter:'',
+  parse(file, options){
+    this.delimiter = options.delimiter;
+    this.file = file
+    if(this.delimiter == ''){
+      console.log('Please insert delimiter')
+    } else{
+      fetch(this.file)
+      .then(response => response.text())
+      .then(csv =>  getHeaders(csv))
+    }
     
     function getHeaders(rawdata) {
-      let headers = rawdata.split('\n')[0].replace('\r', '').split(';');
+      let headers = rawdata.split('\n')[0].replace('\r', '').split(this.delimiter);
       let data = rawdata.split('\n');
       let puredata = [];
       for (let i = 1; i < data.length; i++) {
@@ -26,7 +34,7 @@ NiqqeParse = {
         finishedArr.push(temp);
         temp = {};
       }
-      callback(finishedArr);
+      options.complete(finishedArr)
     }
   }
 }
