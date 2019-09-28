@@ -3,6 +3,9 @@ Script to convert CSV file to javascript objects.
 
 Usage:
 
-NiqqeParse.Parse(filepath, data => {
-  console.log(data)
+NiqqeParse.parse('eval.csv', {
+  delimiter:';',
+  complete: function(result){
+    console.log(result)
+  }
 })
