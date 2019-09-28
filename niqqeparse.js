@@ -1,7 +1,7 @@
 NiqqeParse = {
   file:'',
   delimiter:'',
-  parse(file, options){
+  parse: function(file, options){
     this.delimiter = options.delimiter;
     this.file = file
     if(this.delimiter == ''){
@@ -9,11 +9,10 @@ NiqqeParse = {
     } else{
       fetch(this.file)
       .then(response => response.text())
-      .then(csv =>  getHeaders(csv))
+      .then(csv =>  getHeaders(csv, this.delimiter))
     }
-    
-    function getHeaders(rawdata) {
-      let headers = rawdata.split('\n')[0].replace('\r', '').split(this.delimiter);
+    function getHeaders(rawdata, delimiter) {
+      let headers = rawdata.split('\n')[0].replace('\r', '').split(delimiter);
       let data = rawdata.split('\n');
       let puredata = [];
       for (let i = 1; i < data.length; i++) {
